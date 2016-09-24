@@ -4,6 +4,7 @@
 .mtj.tmp/
 
 # Package Files #
+!JLayer.jar
 *.jar
 *.war
 *.ear

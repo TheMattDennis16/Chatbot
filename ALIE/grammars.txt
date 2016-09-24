@@ -1,0 +1,3 @@
+Hello ALIE,,Hello user.
+Play *,lookupSong, Now playing
+Play * by *,lookupSongBy,Now Playing * by *
