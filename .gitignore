@@ -62,5 +62,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-
-!JLayer.jar
+/target
+/.idea
+/Chatbot.iml
