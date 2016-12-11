@@ -5,28 +5,15 @@
  */
 package songlib;
 
-import java.net.URI;
-
-/**
- *
- * @author Matt
- */
-public class Song 
-{
+public class Song {
     public String name;
-    //public URI uri;
     public String uri;
-    
-    public Song(String newName, String newURI)
-    {
+
+    public Song(String newName, String newURI) {
         name = newName;
-        try
-        {
-            //uri = new URI(newURI);
+        try {
             uri = newURI;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

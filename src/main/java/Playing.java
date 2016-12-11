@@ -1,67 +1,55 @@
 import lowlevel.SongPlayer;
+
 import java.io.File;
 import java.util.ArrayList;
 
-public class Playing 
-{
+public class Playing {
     public SongPlayer currentPlaying;
     public ArrayList<String> queuePlaying;
     private PlayingLoop loop = null;
-    
-    public Playing()
-    {
+
+    public Playing() {
         queuePlaying = new ArrayList<>();
         loop = new PlayingLoop();
         //loop.start();
         loop.start();
     }
-    
-    public void resumeCurrent()
-    {
+
+    public void resumeCurrent() {
         currentPlaying.songStart();
     }
-    
-    public String startNext()
-    {
+
+    public String startNext() {
         String toReturn = "";
-        if(queuePlaying.size() > 0)
-        {
+        if (queuePlaying.size() > 0) {
             currentPlaying = new SongPlayer(new File(queuePlaying.get(0)));
             queuePlaying.remove(0);
-        }
-        else
+        } else
             toReturn = "Nothing queued up to play.";
         return toReturn;
     }
-    
-    public void stopCurrent()
-    {
+
+    public void stopCurrent() {
         currentPlaying.songStop();
     }
-    
-    public void endLoop()
-    {
+
+    public void endLoop() {
         loop.end();
     }
-    
-    public class PlayingLoop extends Thread
-    {
+
+    public class PlayingLoop extends Thread {
         private volatile boolean flag = false;
-        
-        public void run()
-        {
+
+        public void run() {
             setName("PlayingLoop");
-            while(!flag)
-            {
-                if(currentPlaying == null || currentPlaying.getClipState())
-                {
+            while (!flag) {
+                if (currentPlaying == null || currentPlaying.getClipState()) {
                     startNext();
                 }
             }
         }
-        
-        public void end()
-        {
+
+        public void end() {
             flag = true;
         }
     }

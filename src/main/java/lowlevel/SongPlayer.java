@@ -7,89 +7,70 @@ import javazoom.jl.player.advanced.AdvancedPlayer;
 import javazoom.jl.player.advanced.PlaybackEvent;
 import javazoom.jl.player.advanced.PlaybackListener;
 
-public class SongPlayer
-{
+public class SongPlayer {
     private AdvancedPlayer player = null;
     private int pausedOnFrame = 0;
     private boolean pauseRequested = false;
     private boolean isFinished = false;
-    
-    public void run()
-    {}
-    
-    public SongPlayer(File uri)
-    {
-        try
-        {
+
+    public void run() {
+    }
+
+    public SongPlayer(File uri) {
+        try {
             player = new AdvancedPlayer(new FileInputStream(uri));
-            
+
             player.setPlayBackListener(new PlaybackListener() {
                 @Override
-                public void playbackFinished(PlaybackEvent evt)
-                {
-                    if(pauseRequested)
-                    {
+                public void playbackFinished(PlaybackEvent evt) {
+                    if (pauseRequested) {
                         pausedOnFrame = evt.getFrame();
-                    }
-                    else
-                    {
+                    } else {
                         isFinished = true;
                     }
                 }
             });
             player.play();
-            
-        }   
-        catch (Exception e)
-        {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    /**  Acts as both the start and resume function.
-     *
+    /**
+     * Acts as both the start and resume function.
      */
-    public void songStart()
-    {
-        try
-        {
-            if(pausedOnFrame == 0)
-            {
+    public void songStart() {
+        try {
+            if (pausedOnFrame == 0) {
                 player.play();
                 pausedOnFrame = 0;
+            } else {
+                player.play((int) pausedOnFrame, Integer.MAX_VALUE);
             }
-            else
-            {
-                player.play((int)pausedOnFrame, Integer.MAX_VALUE);
-            }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    /**  Pause the currently playing song
-     *
+    /**
+     * Pause the currently playing song
      */
-    public void pause()
-    {
+    public void pause() {
         pauseRequested = true;
         player.stop();
         //pausePosition = clip.getMicrosecondPosition();
     }
-    
+
     /*
      * true means current ms position >= length.
      *
      */
-    public boolean getClipState()
-    {
-        return isFinished;            
+    public boolean getClipState() {
+        return isFinished;
     }
-    
-    public void songStop()
-    {
+
+    public void songStop() {
         player.stop();
         pausedOnFrame = 0;
     }
